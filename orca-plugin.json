@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/stablyai/orca/main/docs/schemas/plugins/orca-plugin.v2.schema.json",
+  "manifestVersion": 2,
+  "execution": "trusted-worker",
+  "id": "no-worktrees",
+  "name": "No Worktrees",
+  "version": "1.0.0",
+  "description": "Stops Orca from creating Git worktrees so you work in each project's main checkout. Folder workspaces are not affected.",
+  "author": { "name": "rolottr", "url": "https://github.com/rolottr" },
+  "repository": "https://github.com/rolottr/orca-no-worktrees",
+  "homepage": "https://github.com/rolottr/orca-no-worktrees",
+  "license": "MIT",
+  "engines": { "orca": ">=1.4.248" },
+  "pluginApi": 1,
+  "main": "main.mjs",
+  "contributes": {
+    "hooks": [{ "event": "workspace.create.before", "onError": "pass" }],
+    "settings": [
+      {
+        "key": "mode",
+        "title": "Worktree creation",
+        "description": "Block: refuse every new Git worktree unless its project is listed below. Off: let Orca create worktrees as usual.",
+        "type": "string",
+        "enum": ["block", "off"],
+        "enumLabels": ["Block new worktrees", "Off (allow worktrees)"],
+        "default": "block"
+      },
+      {
+        "key": "allowedProjects",
+        "title": "Projects that may still create worktrees",
+        "description": "Project ids, separated by commas or new lines. Run `orca repo list --json` to see them.",
+        "type": "string",
+        "multiline": true,
+        "default": "",
+        "placeholder": "3f2c…, 9a71…"
+      }
+    ]
+  },
+  "capabilities": [{ "kind": "settings:own" }]
+}
