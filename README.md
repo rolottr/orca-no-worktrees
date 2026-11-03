@@ -15,8 +15,14 @@ orchestration. Folder workspaces still pass, because they never create a checkou
 
 ## Install
 
-Requires Orca **1.4.248 or later** (the first version with plugin hooks). First turn on
-plugins: Settings → Plugins → **Turn on plugins**.
+Requires Orca **1.4.247 or later**, the first release with plugin hooks. The manifest says
+`>=1.4.248` because Orca 1.4.247 checks plugins against plugin API version 1.4.248, and Orca's
+validator requires that number for hooks. Older Orca releases support plugins but have no hook,
+and the plugin API has no way to remove a workspace, so a plugin can't block or undo worktrees
+there. Those releases refuse this plugin with "requires Orca >=1.4.248" rather than loading it
+and doing nothing.
+
+First turn on plugins: Settings → Plugins → **Turn on plugins**.
 
 - **From the plugin directory:** search for "No Worktrees" in Settings → Plugins. It installs as
   `rolottr.no-worktrees`.
